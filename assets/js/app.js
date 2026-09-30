@@ -687,4 +687,270 @@
     stage.addEventListener("pointerup", endDrag);
     stage.addEventListener("pointercancel", endDrag);
   }
+
+  /* ------------------------------------------------------------------------
+     Схема рынка
+     — наведение подсвечивает здание, нажатие выбирает его
+     — на компьютере карточка справа, на телефоне шторка снизу
+     — шторка тянется пальцем 1:1, смахивание вниз закрывает (скорость + проекция)
+     ------------------------------------------------------------------------ */
+  const plan = document.querySelector("[data-plan]");
+  if (plan) {
+    // Содержимое зданий. Фото: положите файл в assets/img/buildings/ — оно подставится само,
+    // пока файла нет, показывается фрагмент схемы.
+    const BUILDINGS = {
+      c1: {
+        eyebrow: "Корпус 1 · «Вещевой»",
+        title: "Торговый центр",
+        text: "Одежда и обувь, спецодежда и военторг, хозтовары, турецкая бытовая химия, пряжа, карнизы для штор, ТВ и антенны.",
+        tags: ["Одежда", "Обувь", "Военторг", "Хозтовары", "Турецкая химия", "Пряжа", "Шторы и карнизы"],
+        photo: "assets/img/buildings/korpus-1.jpg",
+        focus: [552, 745],
+        action: true,
+      },
+      c2: {
+        eyebrow: "Корпус 2",
+        title: "Светофор",
+        text: "Магазин-склад низких цен: продукты питания и бытовая химия.",
+        tags: ["Продукты", "Бытовая химия"],
+        photo: "assets/img/buildings/korpus-2.jpg",
+        focus: [345, 715],
+      },
+      c3: {
+        eyebrow: "Корпус 3",
+        title: "Продуктовая галерея",
+        text: "Овощи и фрукты, мясо, кондитерские изделия, хозтовары.",
+        tags: ["Овощи и фрукты", "Мясо", "Кондитерская", "Хозтовары"],
+        photo: "assets/img/buildings/korpus-3.jpg",
+        focus: [122, 720],
+      },
+      adm: {
+        eyebrow: "Здание администрации",
+        title: "Администрация",
+        text: "Администрация рынка, лаборатория, туалет и столовая «Щи-Борщи». Рядом парковка.",
+        tags: ["Администрация", "Лаборатория", "Столовая", "Туалет"],
+        photo: "assets/img/buildings/administraciya.jpg",
+        focus: [525, 895],
+      },
+    };
+    const IMG_W = 730;
+    const IMG_H = 1144;
+
+    const canvas = plan.querySelector(".plan__canvas");
+    const card = plan.querySelector("[data-plan-card]");
+    const body = card.querySelector(".plan-card__body");
+    const photo = card.querySelector(".plan-card__photo");
+    const eyebrow = card.querySelector(".eyebrow");
+    const title = card.querySelector(".title");
+    const lead = card.querySelector(".plan-card__text .lead");
+    const tagsEl = card.querySelector(".plan-tags");
+    const action = card.querySelector(".plan-card__action");
+    const closeBtn = card.querySelector(".plan-card__close");
+    const polys = [...plan.querySelectorAll(".plan__svg polygon[data-id]")];
+    const cutout = plan.querySelector(".plan__cut");
+    const chips = [...plan.querySelectorAll(".plan__chip")];
+    const listBtns = [...card.querySelectorAll(".plan-list button")];
+    const sheetMq = matchMedia("(max-width: 899px)");
+    let current = null;
+
+    const polyFor = (id) => polys.find((p) => p.dataset.id === id);
+    // url() внутри CSS-переменной считается от файла стилей, поэтому отдаём полный адрес
+    const abs = (p) => new URL(p, document.baseURI).href;
+
+    const paintPhoto = (id) => {
+      const b = BUILDINGS[id];
+      // Запасной вариант: фрагмент схемы с нужным зданием
+      const w = photo.clientWidth || 360;
+      const h = photo.clientHeight || 225;
+      const k = (w / 300) * 1; // показываем кусок схемы шириной ~300 px
+      photo.style.setProperty("--bg-w", `${IMG_W * k}px`);
+      const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
+      photo.style.setProperty("--bg-x", `${clamp(-(b.focus[0] * k - w / 2), -(IMG_W * k - w), 0)}px`);
+      photo.style.setProperty("--bg-y", `${clamp(-(b.focus[1] * k - h / 2), -(IMG_H * k - h), 0)}px`);
+      photo.style.setProperty("--photo", `url("${abs("assets/img/plan.jpg")}")`);
+      photo.setAttribute("aria-label", `Фрагмент схемы: ${b.title}`);
+      // Настоящее фото, если файл есть
+      const probe = new Image();
+      probe.onload = () => {
+        if (current !== id) return;
+        photo.style.setProperty("--photo", `url("${abs(b.photo)}")`);
+        photo.style.setProperty("--bg-w", "cover");
+        photo.style.setProperty("--bg-x", "center");
+        photo.style.setProperty("--bg-y", "center");
+        photo.setAttribute("aria-label", `Фото: ${b.title}`);
+      };
+      probe.src = b.photo;
+    };
+
+    // ---- Шторка (телефон) ----
+    const sy = new Spring(0, { damping: 1, response: 0.4 });
+    let sheetOpen = false;
+    const renderSheet = () => {
+      card.style.transform = sy.value === 0 ? "" : `translateY(${sy.value}px)`;
+    };
+    const finishSheet = () => {
+      // Сначала прячем (без анимации), потом возвращаем переходы: шторка не «вспыхивает» снова
+      card.classList.add("is-dragging");
+      card.classList.remove("is-open");
+      card.style.transform = "";
+      sy.value = 0;
+      sy.velocity = 0;
+      sy.target = 0;
+      requestAnimationFrame(() => requestAnimationFrame(() => card.classList.remove("is-dragging")));
+    };
+    const sheetAnim = driver([sy], renderSheet, () => {
+      if (sheetOpen) card.classList.remove("is-dragging");
+      else finishSheet();
+    });
+    const openSheet = () => {
+      sheetOpen = true;
+      card.classList.add("is-open");
+      card.style.transform = "";
+      sy.value = 0;
+      sy.velocity = 0;
+    };
+    const closeSheet = (velocity = 0) => {
+      sheetOpen = false;
+      if (reduceMotion.matches) {
+        finishSheet();
+        return;
+      }
+      card.classList.add("is-dragging");
+      sy.configure({ damping: 1, response: 0.4 });
+      sy.velocity = velocity;
+      sy.target = card.offsetHeight + 40;
+      sheetAnim.kick();
+    };
+
+    // ---- Выбор здания ----
+    const select = (id, opts = {}) => {
+      if (!BUILDINGS[id]) return;
+      current = id;
+      const b = BUILDINGS[id];
+      plan.classList.add("has-active");
+      card.classList.add("has-selection");
+      polys.forEach((p) => p.classList.toggle("is-active", p.dataset.id === id));
+      cutout.setAttribute("points", polyFor(id).getAttribute("points"));
+      chips.forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.id === id)));
+      listBtns.forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.id === id)));
+
+      eyebrow.textContent = b.eyebrow;
+      title.textContent = b.title;
+      lead.textContent = b.text;
+      tagsEl.replaceChildren(...b.tags.map((t) => Object.assign(document.createElement("li"), { textContent: t })));
+      action.hidden = !b.action;
+      body.hidden = false;
+      paintPhoto(id);
+
+      if (sheetMq.matches) {
+        sy.target = 0;
+        openSheet();
+        // Схема под шапкой: над шторкой видна верхняя часть зданий и подсветка
+        const top = canvas.getBoundingClientRect().top + window.scrollY - (header ? header.offsetHeight : 64) - 8;
+        window.scrollTo({ top: Math.max(0, top), behavior: reduceMotion.matches ? "auto" : "smooth" });
+      }
+      if (!opts.silent) haptic(6);
+    };
+
+    const clear = () => {
+      current = null;
+      plan.classList.remove("has-active");
+      card.classList.remove("has-selection");
+      polys.forEach((p) => p.classList.remove("is-active"));
+      chips.forEach((c) => c.setAttribute("aria-pressed", "false"));
+      listBtns.forEach((c) => c.setAttribute("aria-pressed", "false"));
+      body.hidden = true;
+      if (sheetMq.matches) closeSheet();
+    };
+
+    chips.forEach((c) => c.addEventListener("click", () => (current === c.dataset.id ? clear() : select(c.dataset.id))));
+    listBtns.forEach((c) => c.addEventListener("click", () => select(c.dataset.id)));
+    closeBtn.addEventListener("click", clear);
+    addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && current) clear();
+    });
+
+    // Нажатие по самому зданию (контуру) и подсветка при наведении
+    const hit = (clientX, clientY) => {
+      const r = canvas.getBoundingClientRect();
+      const x = ((clientX - r.left) / r.width) * IMG_W;
+      const y = ((clientY - r.top) / r.height) * IMG_H;
+      const pt = new DOMPoint(x, y);
+      return polys.find((p) => {
+        // isPointInFill работает в координатах SVG
+        try {
+          return p.isPointInFill(pt);
+        } catch (_) {
+          return false;
+        }
+      });
+    };
+    canvas.addEventListener("pointermove", (e) => {
+      if (e.pointerType === "touch") return;
+      const p = hit(e.clientX, e.clientY);
+      polys.forEach((q) => q.classList.toggle("is-hover", q === p && !q.classList.contains("is-active")));
+      canvas.style.cursor = p ? "pointer" : "";
+    });
+    canvas.addEventListener("pointerleave", () => polys.forEach((q) => q.classList.remove("is-hover")));
+    canvas.addEventListener("click", (e) => {
+      if (e.target.closest(".plan__chip")) return;
+      const p = hit(e.clientX, e.clientY);
+      if (p) select(p.dataset.id);
+      else if (current) clear();
+    });
+
+    // ---- Жест: тянем шторку вниз ----
+    let drag = null;
+    const dragTargets = [card.querySelector(".plan-card__handle"), card.querySelector(".plan-card__photo")];
+    dragTargets.forEach((el) =>
+      el.addEventListener("pointerdown", (e) => {
+        if (!sheetMq.matches || !sheetOpen) return;
+        el.setPointerCapture(e.pointerId);
+        sheetAnim.stop();
+        card.classList.add("is-dragging");
+        drag = { id: e.pointerId, y0: e.clientY, base: sy.value, hist: [{ y: e.clientY, t: e.timeStamp }], el };
+      })
+    );
+    const moveDrag = (e) => {
+      if (!drag || e.pointerId !== drag.id) return;
+      const dy = e.clientY - drag.y0;
+      // Вверх — с резиновым сопротивлением, вниз — 1:1
+      sy.value = dy < 0 ? -rubberband(-dy, 240) : drag.base + dy;
+      sy.velocity = 0;
+      renderSheet();
+      drag.hist.push({ y: e.clientY, t: e.timeStamp });
+      if (drag.hist.length > 6) drag.hist.shift();
+    };
+    const endSheetDrag = (e) => {
+      if (!drag || e.pointerId !== drag.id) return;
+      const d = drag;
+      drag = null;
+      const a = d.hist[0];
+      const b = d.hist[d.hist.length - 1];
+      const v = ((b.y - a.y) / Math.max(1, b.t - a.t)) * 1000;
+      const projected = sy.value + project(v);
+      if (projected > card.offsetHeight * 0.4) {
+        clear();
+        closeSheet(v);
+      } else {
+        sy.configure({ damping: 0.85, response: 0.35 }); // лёгкий отскок: жест имел инерцию
+        sy.velocity = v;
+        sy.target = 0;
+        sheetAnim.kick();
+      }
+    };
+    dragTargets.forEach((el) => {
+      el.addEventListener("pointermove", moveDrag);
+      el.addEventListener("pointerup", endSheetDrag);
+      el.addEventListener("pointercancel", endSheetDrag);
+    });
+
+    // При смене размера экрана возвращаем в чистое состояние
+    sheetMq.addEventListener("change", () => {
+      card.classList.remove("is-open", "is-dragging");
+      card.style.transform = "";
+      sheetOpen = false;
+      if (current) select(current, { silent: true });
+    });
+  }
 })();

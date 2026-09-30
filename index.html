@@ -116,8 +116,8 @@
   <section class="section" id="kategorii">
     <div class="container carousel-head reveal">
       <div>
-        <h2 class="display">Что есть на рынке.</h2>
-        <p class="lead">Всё для дома и семьи — под одной крышей.</p>
+        <h2 class="display">Что есть на нашем рынке?</h2>
+        <p class="lead">Продукты, одежда, обувь, хозтовары, электроника и многое другое под одной крышей.</p>
       </div>
       <div class="carousel-nav" aria-hidden="true">
         <button class="carousel-nav__btn" type="button" data-carousel-prev tabindex="-1" aria-label="Назад"><svg><use href="#i-chev-l"/></svg></button>
@@ -150,8 +150,8 @@
         </div>
         <div class="store-tile__collage" aria-hidden="true">
           <img class="c1" src="assets/img/store/hoodies-new.jpg" alt="" loading="lazy" width="1400" height="1051">
-          <img class="c2" src="assets/img/store/jeans-new.jpg" alt="" loading="lazy" width="1400" height="1051">
-          <img class="c3" src="assets/img/store/caps.jpg" alt="" loading="lazy" width="1400" height="1051">
+          <img class="c2" aria-hidden="true" src="assets/img/store/jeans-new.jpg" alt="" loading="lazy" width="1400" height="1051">
+          <img class="c3" aria-hidden="true" src="assets/img/store/caps.jpg" alt="" loading="lazy" width="1400" height="1051">
         </div>
       </a>
     </div>
@@ -160,7 +160,7 @@
   <section class="section" id="kak-dobratsya">
     <div class="container">
       <div class="section__head reveal">
-        <h2 class="display">Как добраться.</h2>
+        <h2 class="display">Как добраться?</h2>
         <p class="lead">Набережные Челны, ул. Ахметшина, 115</p>
       </div>
       <div class="route reveal">
@@ -181,7 +181,69 @@
     </div>
   </section>
 
-  <section class="section section--white" id="vhod">
+  <section class="section section--white" id="shema">
+    <div class="container">
+      <div class="section__head reveal">
+        <h2 class="display">Схема рынка.</h2>
+        <p class="lead">Четыре здания на одной территории. Нажмите на любое, чтобы увидеть, что в нём.</p>
+      </div>
+
+      <div class="plan reveal" data-plan>
+        <div class="plan__map">
+          <div class="plan__canvas">
+            <img class="plan__img" src="assets/img/plan.jpg" alt="Вид сверху на территорию рынка: три длинных корпуса и здание администрации" width="730" height="1144" loading="lazy">
+            <svg class="plan__svg" viewBox="0 0 730 1144" aria-hidden="true" focusable="false">
+              <defs>
+                <mask id="plan-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="730" height="1144">
+                  <rect width="730" height="1144" fill="#fff"/>
+                  <polygon class="plan__cut" points="0,0 0,0 0,0" fill="#000"/>
+                </mask>
+              </defs>
+              <rect class="plan__dim" width="730" height="1144" mask="url(#plan-mask)"/>
+              <polygon data-id="c3" points="66,58 84,46 195,49 182,722 162,746 42,738"/>
+              <polygon data-id="c2" points="281,52 298,44 413,47 412,711 396,735 266,720"/>
+              <polygon data-id="c1" points="463,58 481,43 617,42 634,739 619,754 464,748"/>
+              <polygon data-id="adm" points="434,839 458,836 627,850 631,927 603,968 416,958 399,911 424,858"/>
+            </svg>
+            <span class="plan__pin" aria-hidden="true"><i></i><b>Магазин одежды</b></span>
+            <button class="plan__chip" type="button" data-id="c3" style="left:18.6%;top:15%" aria-label="Корпус 3, продукты"><em>3</em><span>Продукты</span></button>
+            <button class="plan__chip" type="button" data-id="c2" style="left:48.6%;top:15%" aria-label="Корпус 2, Светофор"><em>2</em><span>Светофор</span></button>
+            <button class="plan__chip" type="button" data-id="c1" style="left:75%;top:15%" aria-label="Корпус 1, вещевой"><em>1</em><span>Вещевой</span></button>
+            <button class="plan__chip plan__chip--wide" type="button" data-id="adm" style="left:72%;top:78.6%" aria-label="Администрация"><span>Администрация</span></button>
+          </div>
+        </div>
+
+        <aside class="plan-card" data-plan-card aria-live="polite">
+          <span class="plan-card__handle" aria-hidden="true"></span>
+          <button class="plan-card__close" type="button" aria-label="Закрыть"><svg><use href="#i-close"/></svg></button>
+
+          <div class="plan-card__empty">
+            <h3 class="subtitle">Выберите здание</h3>
+            <p class="lead">Нажмите на здание на схеме или выберите из списка.</p>
+            <ul class="plan-list">
+              <li><button type="button" data-id="c1"><em>1</em><span><b>Вещевой</b> · Торговый центр</span></button></li>
+              <li><button type="button" data-id="c2"><em>2</em><span><b>Светофор</b></span></button></li>
+              <li><button type="button" data-id="c3"><em>3</em><span><b>Продуктовая галерея</b></span></button></li>
+              <li><button type="button" data-id="adm"><em>A</em><span><b>Администрация</b></span></button></li>
+            </ul>
+          </div>
+
+          <div class="plan-card__body" hidden>
+            <div class="plan-card__photo" role="img" aria-label=""></div>
+            <div class="plan-card__text">
+              <p class="eyebrow"></p>
+              <h3 class="title"></h3>
+              <p class="lead"></p>
+              <ul class="plan-tags"></ul>
+              <a class="btn btn--primary plan-card__action" href="magazin.html" hidden>Магазин одежды <svg><use href="#i-chev-r"/></svg></a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="vhod">
     <div class="container entrance-sec">
       <div class="entrance-sec__media reveal">
         <img src="assets/img/entrance.jpg" alt="Белая арка у входа в агропромпарк «Южный»: оранжевая вывеска с солнцем и зелёная надпись «Вход»" loading="lazy" width="1400" height="1050">
