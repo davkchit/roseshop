@@ -38,7 +38,6 @@
   <symbol id="i-tape" viewBox="0 0 24 24"><path d="M3 8h18v8H3zM7 8v3M11 8v4M15 8v3M19 8v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-season" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="8" r="3"/><path d="M8 2v1.5M8 12.5V14M2 8h1.5M12.5 8H14M3.8 3.8l1 1M11.2 11.2l1 1M3.8 12.2l1-1M11.2 4.8l1-1M17 12v10M13 14l8 6M21 14l-8 6"/></g></symbol>
   <symbol id="i-camera" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></g></symbol>
-  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M3 15c0-4 3-8 8-8s8 4 8 8M3 15h18M19 15c1 0 2.5.5 3 1.5M11 7V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-chev-l" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 </svg>
 
@@ -53,10 +52,11 @@
     <nav class="header__nav" aria-label="Основное меню">
       <a href="index.html#kategorii">Категории</a>
       <a href="magazin.html" aria-current="page">Магазин одежды</a>
-      <a href="index.html#kak-dobratsya">Как добраться</a>
+      <a href="index.html#shema">Схема рынка</a>
       <a href="index.html#kontakty">Контакты</a>
     </nav>
     <div class="header__right">
+      <a class="header__cta" href="index.html#kak-dobratsya">Как добраться</a>
       <!-- TODO: заменить на телефон магазина -->
       <a class="icon-btn icon-btn--glass header__phone" href="tel:+78552473035" aria-label="Позвонить">
         <svg><use href="#i-phone"/></svg><span class="header__phone-text">Позвонить</span>
@@ -76,6 +76,7 @@
       <li><a href="index.html#kategorii">Категории <svg><use href="#i-chev-r"/></svg></a></li>
       <li><a href="magazin.html">Магазин одежды <svg><use href="#i-chev-r"/></svg></a></li>
       <li><a href="index.html#kak-dobratsya">Как добраться <svg><use href="#i-chev-r"/></svg></a></li>
+      <li><a href="index.html#shema">Схема рынка <svg><use href="#i-chev-r"/></svg></a></li>
       <li><a href="index.html#kontakty">Контакты <svg><use href="#i-chev-r"/></svg></a></li>
     </ul>
   </div>
@@ -87,15 +88,14 @@
 
 <main class="page-top">
   <section class="container store-hero">
-    <nav class="crumbs" aria-label="Навигация"><a href="index.html">Главная</a><span aria-hidden="true">/</span><a href="magazin.html">Магазин одежды</a><span aria-hidden="true">/</span><span>Головные уборы</span></nav>
+    <a class="backlink" href="magazin.html"><svg aria-hidden="true"><use href="#i-chev-l"/></svg>Магазин одежды</a>
     <div class="reveal">
-      <p class="eyebrow">Магазин одежды · Ряд 1, места 31–32</p>
       <h1 class="display">Головные уборы.</h1>
-      <p class="lead" style="margin-top:14px">Кепки, шапки и тюбетейки.</p>
+      <p class="lead">Кепки, шапки и тюбетейки.</p>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section tone-warm" style="--prev:var(--bg)">
     <div class="container">
       <div class="soon reveal">
         <span class="soon__icon"><svg><use href="#i-camera"/></svg></span>
@@ -105,7 +105,7 @@
     </div>
   </section>
 
-  <section class="section section--tight">
+  <section class="section section--tight tone-white" style="--prev:var(--warm)">
     <div class="container">
       <div class="ask reveal">
         <span class="ask__icon"><svg><use href="#i-camera"/></svg></span>
@@ -120,7 +120,7 @@
   </section>
 </main>
 
-<footer class="footer">
+<footer class="footer tone-bg" style="--prev:var(--surface)">
   <div class="container footer__inner">
     <img class="logo" src="assets/img/logo.png" alt="" width="1200" height="335">
     <p>Магазин одежды · Агропромпарк «Южный», ряд 1, места 31–32 · Ежедневно 9:00–17:00</p>

@@ -38,7 +38,6 @@
   <symbol id="i-tape" viewBox="0 0 24 24"><path d="M3 8h18v8H3zM7 8v3M11 8v4M15 8v3M19 8v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-season" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="8" r="3"/><path d="M8 2v1.5M8 12.5V14M2 8h1.5M12.5 8H14M3.8 3.8l1 1M11.2 11.2l1 1M3.8 12.2l1-1M11.2 4.8l1-1M17 12v10M13 14l8 6M21 14l-8 6"/></g></symbol>
   <symbol id="i-camera" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></g></symbol>
-  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M3 15c0-4 3-8 8-8s8 4 8 8M3 15h18M19 15c1 0 2.5.5 3 1.5M11 7V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-chev-l" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 </svg>
 
@@ -53,10 +52,11 @@
     <nav class="header__nav" aria-label="Основное меню">
       <a href="index.html#kategorii">Категории</a>
       <a href="magazin.html" aria-current="page">Магазин одежды</a>
-      <a href="index.html#kak-dobratsya">Как добраться</a>
+      <a href="index.html#shema">Схема рынка</a>
       <a href="index.html#kontakty">Контакты</a>
     </nav>
     <div class="header__right">
+      <a class="header__cta" href="index.html#kak-dobratsya">Как добраться</a>
       <!-- TODO: заменить на телефон магазина -->
       <a class="icon-btn icon-btn--glass header__phone" href="tel:+78552473035" aria-label="Позвонить">
         <svg><use href="#i-phone"/></svg><span class="header__phone-text">Позвонить</span>
@@ -76,6 +76,7 @@
       <li><a href="index.html#kategorii">Категории <svg><use href="#i-chev-r"/></svg></a></li>
       <li><a href="magazin.html">Магазин одежды <svg><use href="#i-chev-r"/></svg></a></li>
       <li><a href="index.html#kak-dobratsya">Как добраться <svg><use href="#i-chev-r"/></svg></a></li>
+      <li><a href="index.html#shema">Схема рынка <svg><use href="#i-chev-r"/></svg></a></li>
       <li><a href="index.html#kontakty">Контакты <svg><use href="#i-chev-r"/></svg></a></li>
     </ul>
   </div>
@@ -87,28 +88,92 @@
 
 <main class="page-top">
   <section class="container store-hero">
-    <nav class="crumbs" aria-label="Навигация"><a href="index.html">Главная</a><span aria-hidden="true">/</span><a href="magazin.html">Магазин одежды</a><span aria-hidden="true">/</span><span>Джинсы</span></nav>
+    <a class="backlink" href="magazin.html"><svg aria-hidden="true"><use href="#i-chev-l"/></svg>Магазин одежды</a>
     <div class="reveal">
-      <p class="eyebrow">Магазин одежды · Ряд 1, места 31–32</p>
       <h1 class="display">Джинсы.</h1>
-      <p class="lead" style="margin-top:14px">Широкие, прямые и «мом»: на резинке и классика. Примерьте на месте и подберите размер.</p>
+      <p class="lead">Широкие, прямые и «мом».</p>
     </div>
   </section>
 
-  <section class="section" id="jeans">
+  <section class="section tone-warm" id="jeans" style="--prev:var(--bg)">
     <div class="container">
-      <div class="looks">
-        <button class="good look reveal" type="button" data-lightbox="assets/img/store/jeans-mom-studio.jpg" data-caption="Мом на резинке"><div class="good__media"><img src="assets/img/store/jeans-mom-studio.jpg" alt="Серые джинсы мом на резинке с шнурком и отворотами, белый топ и белые кеды" loading="lazy" width="933" height="1400" style="object-position:50% 45%"></div><div class="good__chip"><b>Мом на резинке</b><span>Серые, с шнурком и отворотами</span></div></button>
-        <button class="good look reveal" type="button" data-lightbox="assets/img/store/jeans-street-gray.jpg" data-caption="Мом, серые"><div class="good__media"><img src="assets/img/store/jeans-street-gray.jpg" alt="Серые джинсы мом на резинке с шнурком и отворотами, белый топ и сумка, городская улица" loading="lazy" width="787" height="1400" style="object-position:50% 55%"></div><div class="good__chip"><b>Мом, серые</b><span>Высокая посадка, отвороты</span></div></button>
-        <button class="good look reveal" type="button" data-lightbox="assets/img/store/jeans-street-blue.jpg" data-caption="Мом, синие"><div class="good__media"><img src="assets/img/store/jeans-street-blue.jpg" alt="Синие джинсы мом на резинке с шнурком и отворотами, белый топ" loading="lazy" width="787" height="1400" style="object-position:50% 55%"></div><div class="good__chip"><b>Мом, синие</b><span>Резинка и шнурок</span></div></button>
-        <button class="good look reveal" type="button" data-lightbox="assets/img/store/jeans-wide-bedroom.jpg" data-caption="Широкие на резинке"><div class="good__media"><img src="assets/img/store/jeans-wide-bedroom.jpg" alt="Серые широкие джинсы с резинкой и бордовым шнурком, светлая спальня" loading="lazy" width="933" height="1400" style="object-position:50% 50%"></div><div class="good__chip"><b>Широкие на резинке</b><span>Прямой крой, серый деним</span></div></button>
-        <button class="good look reveal" type="button" data-lightbox="assets/img/store/jeans-wide-legs.jpg" data-caption="Широкие в пол"><div class="good__media"><img src="assets/img/store/jeans-wide-legs.jpg" alt="Тёмно-серые широкие джинсы с высокой посадкой, студийный кадр" loading="lazy" width="1050" height="1400" style="object-position:50% 35%"></div><div class="good__chip"><b>Широкие в пол</b><span>Высокая посадка, тёмно-серый</span></div></button>
+      <div class="pcards" style="--cols:5">
+        <article class="pcard reveal">
+          <button class="pcard__photo" type="button" data-lightbox="assets/img/store/jeans-wide-legs.jpg" data-caption="Широкие в пол" aria-label="Открыть фото: Широкие в пол"><img src="assets/img/store/jeans-wide-legs.jpg" alt="Тёмно-серые широкие джинсы с высокой посадкой, студийный кадр" loading="lazy" width="1050" height="1400" style="object-position:50% 35%"></button>
+          <div class="pcard__body">
+            <div class="pcard__text"><h3 class="pcard__name">Широкие в пол</h3><p class="pcard__desc">Высокая посадка, тёмно-серый</p></div>
+            <a class="pcard__btn" href="https://wa.me/70000000000?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%C2%AB%D0%A8%D0%B8%D1%80%D0%BE%D0%BA%D0%B8%D0%B5%20%D0%B2%20%D0%BF%D0%BE%D0%BB%C2%BB%20(%D1%80%D0%B0%D0%B7%D0%B4%D0%B5%D0%BB%20%C2%AB%D0%94%D0%B6%D0%B8%D0%BD%D1%81%D1%8B%C2%BB)%20%D0%B2%20%D0%BC%D0%B0%D0%B3%D0%B0%D0%B7%D0%B8%D0%BD%D0%B5%20%D0%BE%D0%B4%D0%B5%D0%B6%D0%B4%D1%8B%20%D0%BD%D0%B0%20%D1%80%D1%8B%D0%BD%D0%BA%D0%B5%20%C2%AB%D0%AE%D0%B6%D0%BD%D1%8B%D0%B9%C2%BB.%20%D0%95%D1%81%D1%82%D1%8C%20%D0%BC%D0%BE%D0%B9%20%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%80%3F" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg><span class="long">Написать о товаре</span><span class="short">Написать</span></a>
+          </div>
+        </article>
+        <article class="pcard reveal">
+          <button class="pcard__photo" type="button" data-lightbox="assets/img/store/jeans-wide-bedroom.jpg" data-caption="Широкие на резинке" aria-label="Открыть фото: Широкие на резинке"><img src="assets/img/store/jeans-wide-bedroom.jpg" alt="Серые широкие джинсы с резинкой и бордовым шнурком, светлая спальня" loading="lazy" width="933" height="1400" style="object-position:50% 50%"></button>
+          <div class="pcard__body">
+            <div class="pcard__text"><h3 class="pcard__name">Широкие на резинке</h3><p class="pcard__desc">Прямой крой, серый деним</p></div>
+            <a class="pcard__btn" href="https://wa.me/70000000000?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%C2%AB%D0%A8%D0%B8%D1%80%D0%BE%D0%BA%D0%B8%D0%B5%20%D0%BD%D0%B0%20%D1%80%D0%B5%D0%B7%D0%B8%D0%BD%D0%BA%D0%B5%C2%BB%20(%D1%80%D0%B0%D0%B7%D0%B4%D0%B5%D0%BB%20%C2%AB%D0%94%D0%B6%D0%B8%D0%BD%D1%81%D1%8B%C2%BB)%20%D0%B2%20%D0%BC%D0%B0%D0%B3%D0%B0%D0%B7%D0%B8%D0%BD%D0%B5%20%D0%BE%D0%B4%D0%B5%D0%B6%D0%B4%D1%8B%20%D0%BD%D0%B0%20%D1%80%D1%8B%D0%BD%D0%BA%D0%B5%20%C2%AB%D0%AE%D0%B6%D0%BD%D1%8B%D0%B9%C2%BB.%20%D0%95%D1%81%D1%82%D1%8C%20%D0%BC%D0%BE%D0%B9%20%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%80%3F" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg><span class="long">Написать о товаре</span><span class="short">Написать</span></a>
+          </div>
+        </article>
+        <article class="pcard reveal">
+          <button class="pcard__photo" type="button" data-lightbox="assets/img/store/jeans-mom-studio.jpg" data-caption="Мом на резинке" aria-label="Открыть фото: Мом на резинке"><img src="assets/img/store/jeans-mom-studio.jpg" alt="Серые джинсы мом на резинке с шнурком и отворотами, белый топ и белые кеды" loading="lazy" width="933" height="1400" style="object-position:50% 45%"></button>
+          <div class="pcard__body">
+            <div class="pcard__text"><h3 class="pcard__name">Мом на резинке</h3><p class="pcard__desc">Серые, с шнурком и отворотами</p></div>
+            <a class="pcard__btn" href="https://wa.me/70000000000?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%C2%AB%D0%9C%D0%BE%D0%BC%20%D0%BD%D0%B0%20%D1%80%D0%B5%D0%B7%D0%B8%D0%BD%D0%BA%D0%B5%C2%BB%20(%D1%80%D0%B0%D0%B7%D0%B4%D0%B5%D0%BB%20%C2%AB%D0%94%D0%B6%D0%B8%D0%BD%D1%81%D1%8B%C2%BB)%20%D0%B2%20%D0%BC%D0%B0%D0%B3%D0%B0%D0%B7%D0%B8%D0%BD%D0%B5%20%D0%BE%D0%B4%D0%B5%D0%B6%D0%B4%D1%8B%20%D0%BD%D0%B0%20%D1%80%D1%8B%D0%BD%D0%BA%D0%B5%20%C2%AB%D0%AE%D0%B6%D0%BD%D1%8B%D0%B9%C2%BB.%20%D0%95%D1%81%D1%82%D1%8C%20%D0%BC%D0%BE%D0%B9%20%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%80%3F" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg><span class="long">Написать о товаре</span><span class="short">Написать</span></a>
+          </div>
+        </article>
+        <article class="pcard reveal">
+          <button class="pcard__photo" type="button" data-lightbox="assets/img/store/jeans-street-gray.jpg" data-caption="Мом, серые" aria-label="Открыть фото: Мом, серые"><img src="assets/img/store/jeans-street-gray.jpg" alt="Серые джинсы мом на резинке с шнурком и отворотами, белый топ и сумка, городская улица" loading="lazy" width="787" height="1400" style="object-position:50% 55%"></button>
+          <div class="pcard__body">
+            <div class="pcard__text"><h3 class="pcard__name">Мом, серые</h3><p class="pcard__desc">Высокая посадка, отвороты</p></div>
+            <a class="pcard__btn" href="https://wa.me/70000000000?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%C2%AB%D0%9C%D0%BE%D0%BC%2C%20%D1%81%D0%B5%D1%80%D1%8B%D0%B5%C2%BB%20(%D1%80%D0%B0%D0%B7%D0%B4%D0%B5%D0%BB%20%C2%AB%D0%94%D0%B6%D0%B8%D0%BD%D1%81%D1%8B%C2%BB)%20%D0%B2%20%D0%BC%D0%B0%D0%B3%D0%B0%D0%B7%D0%B8%D0%BD%D0%B5%20%D0%BE%D0%B4%D0%B5%D0%B6%D0%B4%D1%8B%20%D0%BD%D0%B0%20%D1%80%D1%8B%D0%BD%D0%BA%D0%B5%20%C2%AB%D0%AE%D0%B6%D0%BD%D1%8B%D0%B9%C2%BB.%20%D0%95%D1%81%D1%82%D1%8C%20%D0%BC%D0%BE%D0%B9%20%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%80%3F" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg><span class="long">Написать о товаре</span><span class="short">Написать</span></a>
+          </div>
+        </article>
+        <article class="pcard reveal">
+          <button class="pcard__photo" type="button" data-lightbox="assets/img/store/jeans-street-blue.jpg" data-caption="Мом, синие" aria-label="Открыть фото: Мом, синие"><img src="assets/img/store/jeans-street-blue.jpg" alt="Синие джинсы мом на резинке с шнурком и отворотами, белый топ" loading="lazy" width="787" height="1400" style="object-position:50% 55%"></button>
+          <div class="pcard__body">
+            <div class="pcard__text"><h3 class="pcard__name">Мом, синие</h3><p class="pcard__desc">Резинка и шнурок</p></div>
+            <a class="pcard__btn" href="https://wa.me/70000000000?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%C2%AB%D0%9C%D0%BE%D0%BC%2C%20%D1%81%D0%B8%D0%BD%D0%B8%D0%B5%C2%BB%20(%D1%80%D0%B0%D0%B7%D0%B4%D0%B5%D0%BB%20%C2%AB%D0%94%D0%B6%D0%B8%D0%BD%D1%81%D1%8B%C2%BB)%20%D0%B2%20%D0%BC%D0%B0%D0%B3%D0%B0%D0%B7%D0%B8%D0%BD%D0%B5%20%D0%BE%D0%B4%D0%B5%D0%B6%D0%B4%D1%8B%20%D0%BD%D0%B0%20%D1%80%D1%8B%D0%BD%D0%BA%D0%B5%20%C2%AB%D0%AE%D0%B6%D0%BD%D1%8B%D0%B9%C2%BB.%20%D0%95%D1%81%D1%82%D1%8C%20%D0%BC%D0%BE%D0%B9%20%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%80%3F" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg><span class="long">Написать о товаре</span><span class="short">Написать</span></a>
+          </div>
+        </article>
+        <article class="pcard reveal">
+          <button class="pcard__photo" type="button" data-lightbox="assets/img/store/jeans-elastic-blue.jpg" data-caption="Синие на резинке" aria-label="Открыть фото: Синие на резинке"><img src="assets/img/store/jeans-elastic-blue.jpg" alt="Синие джинсы на резинке с оливковым шнурком, белая футболка, зеркальное селфи" loading="lazy" width="768" height="1376" style="object-position:50% 60%"></button>
+          <div class="pcard__body">
+            <div class="pcard__text"><h3 class="pcard__name">Синие на резинке</h3><p class="pcard__desc">Тёмный деним, шнурок</p></div>
+            <a class="pcard__btn" href="https://wa.me/70000000000?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%C2%AB%D0%A1%D0%B8%D0%BD%D0%B8%D0%B5%20%D0%BD%D0%B0%20%D1%80%D0%B5%D0%B7%D0%B8%D0%BD%D0%BA%D0%B5%C2%BB%20(%D1%80%D0%B0%D0%B7%D0%B4%D0%B5%D0%BB%20%C2%AB%D0%94%D0%B6%D0%B8%D0%BD%D1%81%D1%8B%C2%BB)%20%D0%B2%20%D0%BC%D0%B0%D0%B3%D0%B0%D0%B7%D0%B8%D0%BD%D0%B5%20%D0%BE%D0%B4%D0%B5%D0%B6%D0%B4%D1%8B%20%D0%BD%D0%B0%20%D1%80%D1%8B%D0%BD%D0%BA%D0%B5%20%C2%AB%D0%AE%D0%B6%D0%BD%D1%8B%D0%B9%C2%BB.%20%D0%95%D1%81%D1%82%D1%8C%20%D0%BC%D0%BE%D0%B9%20%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%80%3F" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg><span class="long">Написать о товаре</span><span class="short">Написать</span></a>
+          </div>
+        </article>
+        <article class="pcard reveal">
+          <button class="pcard__photo" type="button" data-lightbox="assets/img/store/jeans-straight-belt.jpg" data-caption="Прямые с ремнём" aria-label="Открыть фото: Прямые с ремнём"><img src="assets/img/store/jeans-straight-belt.jpg" alt="Тёмно-серые прямые джинсы с чёрным ремнём, белая футболка, зеркальное селфи" loading="lazy" width="615" height="1400" style="object-position:50% 65%"></button>
+          <div class="pcard__body">
+            <div class="pcard__text"><h3 class="pcard__name">Прямые с ремнём</h3><p class="pcard__desc">Серый деним, классика</p></div>
+            <a class="pcard__btn" href="https://wa.me/70000000000?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%C2%AB%D0%9F%D1%80%D1%8F%D0%BC%D1%8B%D0%B5%20%D1%81%20%D1%80%D0%B5%D0%BC%D0%BD%D1%91%D0%BC%C2%BB%20(%D1%80%D0%B0%D0%B7%D0%B4%D0%B5%D0%BB%20%C2%AB%D0%94%D0%B6%D0%B8%D0%BD%D1%81%D1%8B%C2%BB)%20%D0%B2%20%D0%BC%D0%B0%D0%B3%D0%B0%D0%B7%D0%B8%D0%BD%D0%B5%20%D0%BE%D0%B4%D0%B5%D0%B6%D0%B4%D1%8B%20%D0%BD%D0%B0%20%D1%80%D1%8B%D0%BD%D0%BA%D0%B5%20%C2%AB%D0%AE%D0%B6%D0%BD%D1%8B%D0%B9%C2%BB.%20%D0%95%D1%81%D1%82%D1%8C%20%D0%BC%D0%BE%D0%B9%20%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%80%3F" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg><span class="long">Написать о товаре</span><span class="short">Написать</span></a>
+          </div>
+        </article>
+        <article class="pcard reveal">
+          <button class="pcard__photo" type="button" data-lightbox="assets/img/store/jeans-straight-street.jpg" data-caption="Прямые серые" aria-label="Открыть фото: Прямые серые"><img src="assets/img/store/jeans-straight-street.jpg" alt="Серые прямые джинсы, белая футболка, белые кеды, улица" loading="lazy" width="615" height="1400" style="object-position:50% 70%"></button>
+          <div class="pcard__body">
+            <div class="pcard__text"><h3 class="pcard__name">Прямые серые</h3><p class="pcard__desc">Свободный прямой крой</p></div>
+            <a class="pcard__btn" href="https://wa.me/70000000000?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%C2%AB%D0%9F%D1%80%D1%8F%D0%BC%D1%8B%D0%B5%20%D1%81%D0%B5%D1%80%D1%8B%D0%B5%C2%BB%20(%D1%80%D0%B0%D0%B7%D0%B4%D0%B5%D0%BB%20%C2%AB%D0%94%D0%B6%D0%B8%D0%BD%D1%81%D1%8B%C2%BB)%20%D0%B2%20%D0%BC%D0%B0%D0%B3%D0%B0%D0%B7%D0%B8%D0%BD%D0%B5%20%D0%BE%D0%B4%D0%B5%D0%B6%D0%B4%D1%8B%20%D0%BD%D0%B0%20%D1%80%D1%8B%D0%BD%D0%BA%D0%B5%20%C2%AB%D0%AE%D0%B6%D0%BD%D1%8B%D0%B9%C2%BB.%20%D0%95%D1%81%D1%82%D1%8C%20%D0%BC%D0%BE%D0%B9%20%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%80%3F" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg><span class="long">Написать о товаре</span><span class="short">Написать</span></a>
+          </div>
+        </article>
+        <article class="pcard reveal">
+          <button class="pcard__photo" type="button" data-lightbox="assets/img/store/jeans-straight-blue.jpg" data-caption="Прямые синие" aria-label="Открыть фото: Прямые синие"><img src="assets/img/store/jeans-straight-blue.jpg" alt="Синие прямые джинсы с высокой посадкой и чёрным ремнём, белый топ" loading="lazy" width="768" height="1374" style="object-position:50% 65%"></button>
+          <div class="pcard__body">
+            <div class="pcard__text"><h3 class="pcard__name">Прямые синие</h3><p class="pcard__desc">Высокая посадка, ремень</p></div>
+            <a class="pcard__btn" href="https://wa.me/70000000000?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%C2%AB%D0%9F%D1%80%D1%8F%D0%BC%D1%8B%D0%B5%20%D1%81%D0%B8%D0%BD%D0%B8%D0%B5%C2%BB%20(%D1%80%D0%B0%D0%B7%D0%B4%D0%B5%D0%BB%20%C2%AB%D0%94%D0%B6%D0%B8%D0%BD%D1%81%D1%8B%C2%BB)%20%D0%B2%20%D0%BC%D0%B0%D0%B3%D0%B0%D0%B7%D0%B8%D0%BD%D0%B5%20%D0%BE%D0%B4%D0%B5%D0%B6%D0%B4%D1%8B%20%D0%BD%D0%B0%20%D1%80%D1%8B%D0%BD%D0%BA%D0%B5%20%C2%AB%D0%AE%D0%B6%D0%BD%D1%8B%D0%B9%C2%BB.%20%D0%95%D1%81%D1%82%D1%8C%20%D0%BC%D0%BE%D0%B9%20%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%80%3F" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg><span class="long">Написать о товаре</span><span class="short">Написать</span></a>
+          </div>
+        </article>
+        <article class="pcard reveal">
+          <button class="pcard__photo" type="button" data-lightbox="assets/img/store/jeans-straight-back.jpg" data-caption="Прямые, вид сзади" aria-label="Открыть фото: Прямые, вид сзади"><img src="assets/img/store/jeans-straight-back.jpg" alt="Серые прямые джинсы с ремнём, вид сзади: два накладных кармана" loading="lazy" width="923" height="1152" style="object-position:50% 60%"></button>
+          <div class="pcard__body">
+            <div class="pcard__text"><h3 class="pcard__name">Прямые, вид сзади</h3><p class="pcard__desc">Серый деним, карманы</p></div>
+            <a class="pcard__btn" href="https://wa.me/70000000000?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%C2%AB%D0%9F%D1%80%D1%8F%D0%BC%D1%8B%D0%B5%2C%20%D0%B2%D0%B8%D0%B4%20%D1%81%D0%B7%D0%B0%D0%B4%D0%B8%C2%BB%20(%D1%80%D0%B0%D0%B7%D0%B4%D0%B5%D0%BB%20%C2%AB%D0%94%D0%B6%D0%B8%D0%BD%D1%81%D1%8B%C2%BB)%20%D0%B2%20%D0%BC%D0%B0%D0%B3%D0%B0%D0%B7%D0%B8%D0%BD%D0%B5%20%D0%BE%D0%B4%D0%B5%D0%B6%D0%B4%D1%8B%20%D0%BD%D0%B0%20%D1%80%D1%8B%D0%BD%D0%BA%D0%B5%20%C2%AB%D0%AE%D0%B6%D0%BD%D1%8B%D0%B9%C2%BB.%20%D0%95%D1%81%D1%82%D1%8C%20%D0%BC%D0%BE%D0%B9%20%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%80%3F" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg><span class="long">Написать о товаре</span><span class="short">Написать</span></a>
+          </div>
+        </article>
       </div>
       <p class="note reveal">Образы созданы нейросетью для примера. Модель, цвет и размерный ряд в наличии уточняйте.</p>
     </div>
   </section>
 
-  <section class="section section--tight">
+  <section class="section section--tight tone-white" style="--prev:var(--warm)">
     <div class="container">
       <div class="ask reveal">
         <span class="ask__icon"><svg><use href="#i-camera"/></svg></span>
@@ -123,7 +188,7 @@
   </section>
 </main>
 
-<footer class="footer">
+<footer class="footer tone-bg" style="--prev:var(--surface)">
   <div class="container footer__inner">
     <img class="logo" src="assets/img/logo.png" alt="" width="1200" height="335">
     <p>Магазин одежды · Агропромпарк «Южный», ряд 1, места 31–32 · Ежедневно 9:00–17:00</p>

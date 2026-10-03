@@ -56,7 +56,6 @@
   <symbol id="i-tape" viewBox="0 0 24 24"><path d="M3 8h18v8H3zM7 8v3M11 8v4M15 8v3M19 8v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-season" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="8" r="3"/><path d="M8 2v1.5M8 12.5V14M2 8h1.5M12.5 8H14M3.8 3.8l1 1M11.2 11.2l1 1M3.8 12.2l1-1M11.2 4.8l1-1M17 12v10M13 14l8 6M21 14l-8 6"/></g></symbol>
   <symbol id="i-camera" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></g></symbol>
-  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M3 15c0-4 3-8 8-8s8 4 8 8M3 15h18M19 15c1 0 2.5.5 3 1.5M11 7V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-chev-l" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 </svg>
 
@@ -71,10 +70,11 @@
     <nav class="header__nav" aria-label="Основное меню">
       <a href="index.html#kategorii">Категории</a>
       <a href="magazin.html" aria-current="page">Магазин одежды</a>
-      <a href="index.html#kak-dobratsya">Как добраться</a>
+      <a href="index.html#shema">Схема рынка</a>
       <a href="index.html#kontakty">Контакты</a>
     </nav>
     <div class="header__right">
+      <a class="header__cta" href="index.html#kak-dobratsya">Как добраться</a>
       <!-- TODO: заменить на телефон магазина -->
       <a class="icon-btn icon-btn--glass header__phone" href="tel:+78552473035" aria-label="Позвонить">
         <svg><use href="#i-phone"/></svg><span class="header__phone-text">Позвонить</span>
@@ -94,6 +94,7 @@
       <li><a href="index.html#kategorii">Категории <svg><use href="#i-chev-r"/></svg></a></li>
       <li><a href="magazin.html">Магазин одежды <svg><use href="#i-chev-r"/></svg></a></li>
       <li><a href="index.html#kak-dobratsya">Как добраться <svg><use href="#i-chev-r"/></svg></a></li>
+      <li><a href="index.html#shema">Схема рынка <svg><use href="#i-chev-r"/></svg></a></li>
       <li><a href="index.html#kontakty">Контакты <svg><use href="#i-chev-r"/></svg></a></li>
     </ul>
   </div>
@@ -105,45 +106,56 @@
 
 <main class="page-top">
   <section class="container store-hero">
-    <nav class="crumbs" aria-label="Навигация"><a href="index.html">Главная</a><span aria-hidden="true">/</span><span>Магазин одежды</span></nav>
+    <a class="backlink" href="index.html"><svg aria-hidden="true"><use href="#i-chev-l"/></svg>Главная</a>
     <div class="reveal">
-      <p class="eyebrow">Агропромпарк «Южный» · Ряд 1, места 31–32</p>
       <h1 class="display">Магазин одежды.</h1>
-      <p class="lead" style="margin-top:14px">Женская и мужская одежда на каждый день, есть модели для подростков. Всё можно примерить на месте.</p>
+      <p class="lead">Женская и мужская одежда. Всё можно примерить.</p>
     </div>
     <div class="store-hero__photo reveal">
       <img src="assets/img/store/corner.jpg" alt="Светлый павильон: джинсы, худи и футболки на вешалках, манекены" width="1400" height="1052" fetchpriority="high">
     </div>
   </section>
 
-  <section class="section" id="assortiment">
+  <section class="section tone-warm" id="assortiment" style="--prev:var(--bg)">
     <div class="container">
       <div class="section__head reveal">
         <h2 class="title">Что у нас есть.</h2>
         <p class="lead">Выберите раздел, чтобы посмотреть подборку.</p>
       </div>
-      <div class="catgrid">
-        <a class="good cat-link reveal" href="dzhinsy.html">
-          <div class="good__media"><img src="assets/img/store/jeans-wide-legs.jpg" alt="Тёмно-серые широкие джинсы" loading="lazy" width="1050" height="1400" style="object-position:50% 35%"></div>
-          <div class="good__chip"><b>Джинсы</b><span>5 образов</span></div>
+      <div class="pcards" style="--cols:4">
+        <a class="pcard reveal" href="dzhinsy.html">
+          <div class="pcard__photo"><img src="assets/img/store/jeans-wide-legs.jpg" alt="Тёмно-серые широкие джинсы" loading="lazy" width="1050" height="1400" style="object-position:50% 35%"></div>
+          <div class="pcard__body">
+            <div class="pcard__text"><h3 class="pcard__name">Джинсы</h3><p class="pcard__desc">10 образов</p></div>
+            <span class="pcard__btn pcard__btn--ghost">Смотреть <svg aria-hidden="true"><use href="#i-chev-r"/></svg></span>
+          </div>
         </a>
-        <a class="good cat-link reveal" href="hudi.html">
-          <div class="good__media"><img src="assets/img/store/cat-hudi.jpg" alt="Серое худи на молнии с капюшоном" loading="lazy" width="1120" height="1400" style="object-position:50% 30%"></div>
-          <div class="good__chip"><b>Худи</b><span>Скоро фото</span></div>
+        <a class="pcard reveal" href="hudi.html">
+          <div class="pcard__photo"><img src="assets/img/store/cat-hudi.jpg" alt="Серое худи на молнии с капюшоном" loading="lazy" width="1120" height="1400" style="object-position:50% 30%"></div>
+          <div class="pcard__body">
+            <div class="pcard__text"><h3 class="pcard__name">Худи и куртки</h3><p class="pcard__desc">5 образов</p></div>
+            <span class="pcard__btn pcard__btn--ghost">Смотреть <svg aria-hidden="true"><use href="#i-chev-r"/></svg></span>
+          </div>
         </a>
-        <a class="good cat-link reveal" href="pizhamy.html">
-          <div class="good__media"><img src="assets/img/store/cat-pizhamy.jpg" alt="Плюшевая пижама с сердечками" loading="lazy" width="788" height="1400" style="object-position:50% 35%"></div>
-          <div class="good__chip"><b>Пижамы</b><span>Скоро фото</span></div>
+        <a class="pcard reveal" href="pizhamy.html">
+          <div class="pcard__photo"><img src="assets/img/store/robe-navy.jpg" alt="Тёмно-синий плюшевый халат с капюшоном" loading="lazy" width="933" height="1400" style="object-position:50% 40%"></div>
+          <div class="pcard__body">
+            <div class="pcard__text"><h3 class="pcard__name">Пижамы и халаты</h3><p class="pcard__desc">4 образа</p></div>
+            <span class="pcard__btn pcard__btn--ghost">Смотреть <svg aria-hidden="true"><use href="#i-chev-r"/></svg></span>
+          </div>
         </a>
-        <a class="good cat-link reveal" href="golovnye-ubory.html">
-          <div class="good__media good__media--soon"><svg aria-hidden="true"><use href="#i-cap"/></svg></div>
-          <div class="good__chip"><b>Головные уборы</b><span>Скоро фото</span></div>
+        <a class="pcard reveal" href="golovnye-ubory.html">
+          <div class="pcard__photo"><img src="assets/img/store/cat-golovnye-ubory.jpg" alt="Оливковая кепка с козырьком" loading="lazy" width="1000" height="1200" style="object-position:50% 25%"></div>
+          <div class="pcard__body">
+            <div class="pcard__text"><h3 class="pcard__name">Головные уборы</h3><p class="pcard__desc">Скоро фото</p></div>
+            <span class="pcard__btn pcard__btn--ghost">Смотреть <svg aria-hidden="true"><use href="#i-chev-r"/></svg></span>
+          </div>
         </a>
       </div>
     </div>
   </section>
 
-  <section class="section section--tight section--white">
+  <section class="section section--tight tone-white" style="--prev:var(--warm)">
     <div class="container perks">
       <div class="perk reveal"><span class="perk__icon"><svg><use href="#i-hanger"/></svg></span><div><b>Примерка на месте</b><span>Посмотрите и примерьте до покупки</span></div></div>
       <div class="perk reveal"><span class="perk__icon"><svg><use href="#i-tape"/></svg></span><div><b>Подберём размер</b><span>Подскажем, что подойдёт именно вам</span></div></div>
@@ -151,30 +163,38 @@
     </div>
   </section>
 
-  <section class="section section--tight section--white" id="kak-nayti">
+  <section class="section section--tight tone-warm" id="kak-nayti" style="--prev:var(--surface)">
     <div class="container">
       <div class="section__head reveal">
-        <h2 class="title">Как нас найти.</h2>
+        <h2 class="title">Как нас найти?</h2>
       </div>
-      <div class="find reveal">
+      <div class="find reveal" data-tour>
         <div class="panel">
-          <ol class="steps">
-            <li><div><b>Агропромпарк «Южный»</b><span>Набережные Челны, ул. Ахметшина, 115</span></div></li>
-            <li><div><b>Корпус 1 — вещевой</b><span>Справа от входа на территорию: на крыше цифра 1, вывеска «Торговый центр»</span></div></li>
-            <li><div><b>Первый ряд</b><span>Ищите жёлтые таблички с номером ряда и места</span></div></li>
-            <li><div><b>Места 31–32</b><span>У входа — стенд с кепками и мужские джинсы</span></div></li>
+          <ol class="steps steps--tour" data-tour-steps>
+            <li data-img="assets/img/entrance.jpg" data-alt="Белая арка у входа на территорию рынка" data-x="50" data-y="68" data-label="Проходите под аркой"><div><b>Белая арка</b><span>Заходите на территорию через арку «Южный»</span></div></li>
+            <li data-img="assets/img/buildings/korpus-1.jpg" data-alt="Корпус 1: вывеска «Торговый центр»" data-x="70" data-y="38" data-label="Корпус 1 · Торговый центр"><div><b>Корпус 1 — вещевой</b><span>Справа от входа: вывеска «Торговый центр», цифра 1</span></div></li>
+            <li data-img="assets/img/buildings/korpus-1.jpg" data-x="29.5" data-y="66" data-zoom="2" data-label="Вход в корпус"><div><b>Вход в корпус</b><span>Стеклянные двери под жёлтым козырьком</span></div></li>
+            <li data-img="assets/img/store/corner.jpg" data-alt="Первый ряд внутри корпуса" data-x="50" data-y="75" data-label="Идите по первому ряду"><div><b>Первый ряд</b><span>Идите вдоль ряда, ищите жёлтые таблички</span></div></li>
+            <li data-img="assets/img/store/caps.jpg" data-alt="Стенд с кепками у магазина" data-x="46" data-y="44" data-label="Места 31–32"><div><b>Места 31–32</b><span>Стенд с кепками и мужские джинсы</span></div></li>
           </ol>
           <a class="btn btn--ghost" href="https://yandex.ru/maps/org/agroprompark_yuzhny/1775293851/" target="_blank" rel="noopener"><svg><use href="#i-route"/></svg>Маршрут до рынка</a>
         </div>
-        <div class="find__photo">
-          <img src="assets/img/store/caps.jpg" alt="Стойка с кепками и ряд рубашек и джинсов у входа в павильон" loading="lazy" width="1400" height="1052">
-          <span class="find__pin">Ряд 1 · Места 31–32</span>
+        <div class="tour" aria-label="Фото-тур: как пройти от арки до магазина">
+          <div class="tour__stage" tabindex="0">
+            <span class="tour__spot" aria-hidden="true"><i></i><b></b></span>
+            <span class="tour__count" aria-live="polite"></span>
+          </div>
+          <div class="tour__bar">
+            <button class="tour__nav" type="button" data-tour-prev aria-label="Назад"><svg><use href="#i-chev-l"/></svg></button>
+            <div class="tour__dots"></div>
+            <button class="tour__next" type="button" data-tour-next>Дальше <svg><use href="#i-chev-r"/></svg></button>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section tone-white" style="--prev:var(--warm)">
     <div class="container">
       <div class="ask reveal">
         <span class="ask__icon"><svg><use href="#i-camera"/></svg></span>
@@ -190,7 +210,7 @@
   </section>
 </main>
 
-<footer class="footer">
+<footer class="footer tone-bg" style="--prev:var(--surface)">
   <div class="container footer__inner">
     <img class="logo" src="assets/img/logo.png" alt="" width="1200" height="335">
     <p>Магазин одежды · Агропромпарк «Южный», ряд 1, места 31–32 · Ежедневно 9:00–17:00</p>

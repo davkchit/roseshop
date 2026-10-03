@@ -11,6 +11,13 @@
   root.classList.add("js");
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)");
 
+  // Номер WhatsApp магазина — ЕДИНСТВЕННОЕ место, где его нужно поменять (формат 79XXXXXXXXX, без плюса).
+  // Подставляется во все ссылки wa.me на сайте.
+  const WHATSAPP_NUMBER = "70000000000";
+  document.querySelectorAll('a[href*="wa.me/"]').forEach((a) => {
+    a.href = a.href.replace(/wa\.me\/\d+/, "wa.me/" + WHATSAPP_NUMBER);
+  });
+
   // Тактильный отклик — только там, где действие «зафиксировалось» (Android; на iOS безвредно игнорируется)
   const haptic = (ms = 8) => {
     if (!reduceMotion.matches && navigator.vibrate) navigator.vibrate(ms);
@@ -701,7 +708,7 @@
     const BUILDINGS = {
       c1: {
         eyebrow: "Корпус 1 · «Вещевой»",
-        title: "Торговый центр",
+        title: "Корпус 1 · Вещевой",
         text: "Одежда и обувь, спецодежда и военторг, хозтовары, турецкая бытовая химия, пряжа, карнизы для штор, ТВ и антенны.",
         tags: ["Одежда", "Обувь", "Военторг", "Хозтовары", "Турецкая химия", "Пряжа", "Шторы и карнизы"],
         photo: "assets/img/buildings/korpus-1.jpg",
@@ -710,7 +717,7 @@
       },
       c2: {
         eyebrow: "Корпус 2",
-        title: "Светофор",
+        title: "Корпус 2 · Светофор",
         text: "Магазин-склад низких цен: продукты питания и бытовая химия.",
         tags: ["Продукты", "Бытовая химия"],
         photo: "assets/img/buildings/korpus-2.jpg",
@@ -718,7 +725,7 @@
       },
       c3: {
         eyebrow: "Корпус 3",
-        title: "Продуктовая галерея",
+        title: "Корпус 3 · Продуктовая галерея",
         text: "Овощи и фрукты, мясо, кондитерские изделия, хозтовары.",
         tags: ["Овощи и фрукты", "Мясо", "Кондитерская", "Хозтовары"],
         photo: "assets/img/buildings/korpus-3.jpg",
@@ -740,7 +747,6 @@
     const card = plan.querySelector("[data-plan-card]");
     const body = card.querySelector(".plan-card__body");
     const photo = card.querySelector(".plan-card__photo");
-    const eyebrow = card.querySelector(".eyebrow");
     const title = card.querySelector(".title");
     const lead = card.querySelector(".plan-card__text .lead");
     const tagsEl = card.querySelector(".plan-tags");
@@ -749,7 +755,7 @@
     const polys = [...plan.querySelectorAll(".plan__svg polygon[data-id]")];
     const cutout = plan.querySelector(".plan__cut");
     const chips = [...plan.querySelectorAll(".plan__chip")];
-    const listBtns = [...card.querySelectorAll(".plan-list button")];
+    const listBtns = [...card.querySelectorAll(".plan-list button, .plan-switch button")];
     const sheetMq = matchMedia("(max-width: 899px)");
     let current = null;
 
@@ -834,7 +840,6 @@
       chips.forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.id === id)));
       listBtns.forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.id === id)));
 
-      eyebrow.textContent = b.eyebrow;
       title.textContent = b.title;
       lead.textContent = b.text;
       tagsEl.replaceChildren(...b.tags.map((t) => Object.assign(document.createElement("li"), { textContent: t })));
@@ -845,9 +850,17 @@
       if (sheetMq.matches) {
         sy.target = 0;
         openSheet();
-        // Схема под шапкой: над шторкой видна верхняя часть зданий и подсветка
-        const top = canvas.getBoundingClientRect().top + window.scrollY - (header ? header.offsetHeight : 64) - 8;
-        window.scrollTo({ top: Math.max(0, top), behavior: reduceMotion.matches ? "auto" : "smooth" });
+        // Здание ставим в середину видимой области над шторкой
+        requestAnimationFrame(() =>
+          requestAnimationFrame(() => {
+            const bb = polyFor(id).getBBox();
+            const r = canvas.getBoundingClientRect();
+            const cy = r.top + ((bb.y + bb.height / 2) / IMG_H) * r.height;
+            const headerH = header ? header.offsetHeight : 64;
+            const free = Math.max(160, window.innerHeight - card.offsetHeight - headerH);
+            window.scrollBy({ top: cy - (headerH + free / 2), behavior: reduceMotion.matches ? "auto" : "smooth" });
+          })
+        );
       }
       if (!opts.silent) haptic(6);
     };
@@ -863,11 +876,11 @@
       if (sheetMq.matches) closeSheet();
     };
 
-    chips.forEach((c) => c.addEventListener("click", () => (current === c.dataset.id ? clear() : select(c.dataset.id))));
+    chips.forEach((c) => c.addEventListener("click", () => (current === c.dataset.id && sheetMq.matches ? clear() : select(c.dataset.id))));
     listBtns.forEach((c) => c.addEventListener("click", () => select(c.dataset.id)));
     closeBtn.addEventListener("click", clear);
     addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && current) clear();
+      if (e.key === "Escape" && current && sheetMq.matches) clear();
     });
 
     // Нажатие по самому зданию (контуру) и подсветка при наведении
@@ -896,7 +909,7 @@
       if (e.target.closest(".plan__chip")) return;
       const p = hit(e.clientX, e.clientY);
       if (p) select(p.dataset.id);
-      else if (current) clear();
+      else if (current && sheetMq.matches) clear();
     });
 
     // ---- Жест: тянем шторку вниз ----
@@ -945,6 +958,8 @@
       el.addEventListener("pointercancel", endSheetDrag);
     });
 
+    if (!sheetMq.matches) select("c1", { silent: true });
+
     // При смене размера экрана возвращаем в чистое состояние
     sheetMq.addEventListener("change", () => {
       card.classList.remove("is-open", "is-dragging");
@@ -953,4 +968,161 @@
       if (current) select(current, { silent: true });
     });
   }
+
+  /* ------------------------------------------------------------------------
+     Фото-тур: шаги «арка → корпус → дверь → ряд → магазин».
+     Данные берутся из списка шагов в HTML (data-атрибуты), поэтому фото
+     меняются без правки кода: достаточно подменить файлы и подписи.
+     ------------------------------------------------------------------------ */
+  document.querySelectorAll("[data-tour]").forEach((root) => {
+    const list = root.querySelector("[data-tour-steps]");
+    const stage = root.querySelector(".tour__stage");
+    if (!list || !stage) return;
+    const spot = stage.querySelector(".tour__spot");
+    const spotLabel = spot.querySelector("b");
+    const counter = stage.querySelector(".tour__count");
+    const prev = root.querySelector("[data-tour-prev]");
+    const next = root.querySelector("[data-tour-next]");
+    const dotsEl = root.querySelector(".tour__dots");
+    const items = [...list.children];
+    const num = (v, d) => (v === undefined || v === "" ? d : parseFloat(v));
+    const steps = items.map((li) => {
+      const x = num(li.dataset.x, 50);
+      const y = num(li.dataset.y, 50);
+      return {
+        img: li.dataset.img,
+        alt: li.dataset.alt || "",
+        x,
+        y,
+        z: num(li.dataset.zoom, 1),
+        fx: num(li.dataset.fx, x),
+        fy: num(li.dataset.fy, y),
+        label: li.dataset.label || "",
+      };
+    });
+
+    // Один слой на каждую уникальную картинку: соседние шаги с той же картинкой просто приближают её
+    const layers = new Map();
+    steps.forEach((s) => {
+      if (layers.has(s.img)) return;
+      const layer = document.createElement("div");
+      layer.className = "tour__layer";
+      const im = new Image();
+      im.src = s.img;
+      im.alt = s.alt;
+      im.decoding = "async";
+      im.draggable = false;
+      layer.append(im);
+      stage.prepend(layer);
+      layers.set(s.img, layer);
+    });
+
+    const dots = steps.map((_, i) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "tour__dot";
+      b.setAttribute("aria-label", "Шаг " + (i + 1));
+      b.addEventListener("click", () => go(i));
+      dotsEl.append(b);
+      return b;
+    });
+
+    const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+    let current = -1;
+    let spotTimer = 0;
+
+    function go(n) {
+      n = clamp(n, 0, steps.length - 1);
+      const s = steps[n];
+      const layer = layers.get(s.img);
+      const sameLayer = current >= 0 && steps[current].img === s.img;
+      // Точку (fx, fy) переносим в центр кадра, но не показываем пустоту за краем картинки
+      const tx = clamp(50 - s.fx * s.z, 100 - 100 * s.z, 0);
+      const ty = clamp(50 - s.fy * s.z, 100 - 100 * s.z, 0);
+      const transform = "translate(" + tx + "%, " + ty + "%) scale(" + s.z + ")";
+      if (!sameLayer) {
+        layer.style.transition = "none";
+        layer.style.transform = transform;
+        void layer.offsetWidth;
+        layer.style.transition = "";
+        layers.forEach((l) => l.classList.toggle("is-on", l === layer));
+      } else {
+        layer.style.transform = transform;
+      }
+
+      // Метка «куда идти» появляется после перехода
+      clearTimeout(spotTimer);
+      spot.classList.remove("is-on");
+      spotTimer = setTimeout(
+        () => {
+          spot.style.left = s.x * s.z + tx + "%";
+          spot.style.top = s.y * s.z + ty + "%";
+          spotLabel.textContent = s.label;
+          spotLabel.style.translate = "-50% 0";
+          spot.classList.add("is-on");
+          // Подпись не должна выходить за края кадра
+          const sr = stage.getBoundingClientRect();
+          const lr = spotLabel.getBoundingClientRect();
+          let shift = 0;
+          if (lr.right > sr.right - 8) shift = sr.right - 8 - lr.right;
+          if (lr.left < sr.left + 8) shift = sr.left + 8 - lr.left;
+          if (shift) spotLabel.style.translate = "calc(-50% + " + shift + "px) 0";
+        },
+        reduceMotion.matches ? 0 : sameLayer ? 380 : 480
+      );
+
+      counter.textContent = "Шаг " + (n + 1) + " из " + steps.length;
+      items.forEach((li, i) => {
+        li.classList.toggle("is-current", i === n);
+        if (i === n) li.setAttribute("aria-current", "step");
+        else li.removeAttribute("aria-current");
+      });
+      dots.forEach((d, i) => d.classList.toggle("is-on", i === n));
+      prev.disabled = n === 0;
+      const last = n === steps.length - 1;
+      next.firstChild.textContent = last ? "Сначала " : "Дальше ";
+      current = n;
+    }
+
+    prev.addEventListener("click", () => go(current - 1));
+    next.addEventListener("click", () => go(current === steps.length - 1 ? 0 : current + 1));
+    items.forEach((li, i) => {
+      li.tabIndex = 0;
+      li.setAttribute("role", "button");
+      li.addEventListener("click", () => go(i));
+      li.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          go(i);
+        }
+      });
+    });
+    stage.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") go(current + 1);
+      if (e.key === "ArrowLeft") go(current - 1);
+    });
+
+    // Свайп по кадру
+    let sx = 0;
+    let sy = 0;
+    stage.addEventListener("pointerdown", (e) => {
+      sx = e.clientX;
+      sy = e.clientY;
+    });
+    stage.addEventListener("pointerup", (e) => {
+      const dx = e.clientX - sx;
+      const dy = e.clientY - sy;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) go(current + (dx < 0 ? 1 : -1));
+    });
+
+    go(0);
+    // На телефоне resize приходит при каждом сворачивании адресной строки — пересчитываем только при смене ширины
+    let lastW = innerWidth;
+    addEventListener("resize", () => {
+      if (innerWidth === lastW) return;
+      lastW = innerWidth;
+      go(current);
+    });
+  });
+
 })();
