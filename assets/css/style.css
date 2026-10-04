@@ -774,8 +774,10 @@ main, .footer { transition: transform 520ms var(--ease-spring), opacity 320ms va
 }
 .plan-card__text { display: grid; gap: 4px; justify-items: start; }
 
-.plan-tags { list-style: none; margin: var(--s4) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
-.plan-tags li { padding: 7px 13px; border-radius: 999px; background: var(--bg); color: var(--ink); font-weight: 600; font-size: 0.9375rem; }
+/* Что есть в здании — простой список через точку: это подписи, а не кнопки */
+.plan-tags { list-style: none; margin: var(--s4) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--s1) 0; }
+.plan-tags li { color: var(--ink); font-weight: 600; font-size: 1rem; }
+.plan-tags li:not(:last-child)::after { content: "·"; margin: 0 var(--s2); color: var(--text-2); }
 .plan-card__action { margin-top: var(--s4); }
 .plan-card [hidden] { display: none !important; }
 
@@ -953,7 +955,6 @@ button.pcard__photo { cursor: zoom-in; }
 .plan-list button { min-height: 60px; }
 
 /* ---------- Панель схемы на компьютере: всегда заполнена, одной высоты с картой ---------- */
-.plan-switch { display: none; }
 @media (min-width: 900px) {
   .plan { align-items: stretch; }
   .plan-card { position: relative; top: auto; min-height: 0; display: flex; flex-direction: column; }
@@ -962,15 +963,6 @@ button.pcard__photo { cursor: zoom-in; }
   .plan-card__photo { aspect-ratio: 16 / 10; margin-bottom: var(--s5); }
   .plan-card__text { flex: 1; align-content: start; }
   .plan-card__text .lead { font-size: 1.125rem; max-width: 40ch; }
-  .plan-switch { display: flex; flex-wrap: wrap; gap: var(--s2); margin-top: auto; padding-top: var(--s5); }
-  .plan-switch button {
-    min-height: 44px; padding: 0 var(--s4); border-radius: 999px;
-    background: var(--bg); font-weight: 700; font-size: 0.9375rem; color: var(--ink);
-    transition: transform 100ms var(--ease-out), background-color 200ms, color 200ms;
-  }
-  .plan-switch button:hover { background: var(--surface-sun); }
-  .plan-switch button:active { transform: scale(0.96); }
-  .plan-switch button[aria-pressed="true"] { background: var(--ink); color: #fff; }
 }
 
 /* ---------- Шторка на телефоне: по высоте контента, целиком, с кнопкой ---------- */

@@ -674,7 +674,7 @@
     const polys = [...plan.querySelectorAll(".plan__svg polygon[data-id]")];
     const cutout = plan.querySelector(".plan__cut");
     const chips = [...plan.querySelectorAll(".plan__chip")];
-    const listBtns = [...card.querySelectorAll(".plan-list button, .plan-switch button")];
+    const listBtns = [...card.querySelectorAll(".plan-list button")];
     const sheetMq = matchMedia("(max-width: 899px)");
     let current = null;
 
