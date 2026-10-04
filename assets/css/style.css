@@ -1290,4 +1290,6 @@ a.pcard .pcard__desc { color: rgba(255, 255, 255, 0.85); font-size: 0.9375rem; }
 @media (max-width: 899px) {
   .steps--tour li:not(.is-current) { display: none; }
   .steps--tour li.is-current { margin-inline: 0; }
+  /* Скрытые шаги не считаются CSS-счётчиком — номер берём из позиции шага */
+  .steps--tour li[data-n]::before { content: attr(data-n); }
 }

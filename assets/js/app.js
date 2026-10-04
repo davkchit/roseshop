@@ -1073,6 +1073,7 @@
 
       counter.textContent = "Шаг " + (n + 1) + " из " + steps.length;
       items.forEach((li, i) => {
+        li.dataset.n = i + 1;
         li.classList.toggle("is-current", i === n);
         if (i === n) li.setAttribute("aria-current", "step");
         else li.removeAttribute("aria-current");
