@@ -1245,3 +1245,10 @@ a.pcard .pcard__desc { color: rgba(255, 255, 255, 0.85); font-size: 0.9375rem; }
   .steps--tour li:nth-child(11)::before { content: "11"; }
   .steps--tour li:nth-child(12)::before { content: "12"; }
 }
+
+/* Метка магазина: подпись под точкой, по центру корпуса 1 — не заезжает на соседний «Светофор» */
+.plan__pin { flex-direction: column; translate: -50% -8px; }
+.plan__pin b {
+  position: static; margin-top: var(--s2);
+  text-align: center; white-space: normal; line-height: 1.15;
+}
