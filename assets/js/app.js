@@ -763,29 +763,39 @@
     // url() внутри CSS-переменной считается от файла стилей, поэтому отдаём полный адрес
     const abs = (p) => new URL(p, document.baseURI).href;
 
+    // Фото зданий грузим заранее, чтобы при нажатии они появлялись сразу
+    const photoOk = {};
+    Object.entries(BUILDINGS).forEach(([id, b]) => {
+      const img = new Image();
+      img.onload = () => { photoOk[id] = true; };
+      img.onerror = () => {
+        photoOk[id] = false;
+        if (current === id) paintPhoto(id);
+      };
+      img.src = b.photo;
+    });
+
     const paintPhoto = (id) => {
       const b = BUILDINGS[id];
-      // Запасной вариант: фрагмент схемы с нужным зданием
-      const w = photo.clientWidth || 360;
-      const h = photo.clientHeight || 225;
-      const k = (w / 300) * 1; // показываем кусок схемы шириной ~300 px
-      photo.style.setProperty("--bg-w", `${IMG_W * k}px`);
-      const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
-      photo.style.setProperty("--bg-x", `${clamp(-(b.focus[0] * k - w / 2), -(IMG_W * k - w), 0)}px`);
-      photo.style.setProperty("--bg-y", `${clamp(-(b.focus[1] * k - h / 2), -(IMG_H * k - h), 0)}px`);
-      photo.style.setProperty("--photo", `url("${abs("assets/img/plan.jpg")}")`);
-      photo.setAttribute("aria-label", `Фрагмент схемы: ${b.title}`);
-      // Настоящее фото, если файл есть
-      const probe = new Image();
-      probe.onload = () => {
-        if (current !== id) return;
+      if (photoOk[id] !== false) {
+        // Настоящее фото здания; пока грузится — ровный тёплый фон, без промежуточных кадров
         photo.style.setProperty("--photo", `url("${abs(b.photo)}")`);
         photo.style.setProperty("--bg-w", "cover");
         photo.style.setProperty("--bg-x", "center");
         photo.style.setProperty("--bg-y", "center");
         photo.setAttribute("aria-label", `Фото: ${b.title}`);
-      };
-      probe.src = b.photo;
+        return;
+      }
+      // Запасной вариант, если фото не загрузилось: фрагмент схемы с нужным зданием
+      const w = photo.clientWidth || 360;
+      const h = photo.clientHeight || 225;
+      const k = w / 300; // показываем кусок схемы шириной ~300 px
+      const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
+      photo.style.setProperty("--bg-w", `${IMG_W * k}px`);
+      photo.style.setProperty("--bg-x", `${clamp(-(b.focus[0] * k - w / 2), -(IMG_W * k - w), 0)}px`);
+      photo.style.setProperty("--bg-y", `${clamp(-(b.focus[1] * k - h / 2), -(IMG_H * k - h), 0)}px`);
+      photo.style.setProperty("--photo", `url("${abs("assets/img/plan.jpg")}")`);
+      photo.setAttribute("aria-label", `Фрагмент схемы: ${b.title}`);
     };
 
     // ---- Шторка (телефон) ----
