@@ -1237,3 +1237,7 @@ a.pcard .pcard__desc { color: rgba(255, 255, 255, 0.85); font-size: 0.9375rem; }
   .steps--tour li:nth-child(11)::before { content: "11"; }
   .steps--tour li:nth-child(12)::before { content: "12"; }
 }
+
+/* Шаги тура: кружок по центру строки шага, одинаковые поля со всех сторон у подсветки */
+.steps--tour li { align-items: center; padding: var(--s3); margin-inline: calc(var(--s3) * -1); }
+.steps--tour { gap: var(--s1); }
