@@ -242,83 +242,6 @@
   }
 
   /* ------------------------------------------------------------------------
-     Сегменты-фильтр: подложка едет на пружине, можно перещёлкивать на лету
-     ------------------------------------------------------------------------ */
-  document.querySelectorAll("[data-filter]").forEach((seg) => {
-    const thumb = seg.querySelector(".segmented__thumb");
-    const buttons = [...seg.querySelectorAll("button")];
-    const list = document.querySelector(seg.dataset.filter);
-    const items = list ? [...list.children] : [];
-    const x = new Spring(0, { damping: 1, response: 0.38 });
-    const w = new Spring(0, { damping: 1, response: 0.38 });
-    const render = () => {
-      thumb.style.transform = `translateX(${x.value}px)`;
-      thumb.style.width = `${w.value}px`;
-    };
-    const anim = driver([x, w], render);
-
-    const moveTo = (btn, instant) => {
-      x.target = btn.offsetLeft;
-      w.target = btn.offsetWidth;
-      if (instant) {
-        x.settle();
-        w.settle();
-        render();
-      } else anim.kick();
-    };
-
-    const applyFilter = (key) => {
-      // FLIP: оставшиеся карточки плавно переезжают на новые места
-      const before = new Map(items.map((el) => [el, el.getBoundingClientRect()]));
-      items.forEach((el) => {
-        const tags = (el.dataset.tags || "").split(" ");
-        el.classList.toggle("is-hidden", key !== "all" && !tags.includes(key));
-      });
-      if (reduceMotion.matches) return;
-      items.forEach((el) => {
-        if (el.classList.contains("is-hidden")) return;
-        const a = before.get(el);
-        const b = el.getBoundingClientRect();
-        el.getAnimations().forEach((an) => an.cancel());
-        if (a.width === 0) {
-          el.animate(
-            [
-              { opacity: 0, transform: "scale(0.94)" },
-              { opacity: 1, transform: "none" },
-            ],
-            { duration: 420, easing: "cubic-bezier(0.22, 1, 0.36, 1)" }
-          );
-        } else if (a.left !== b.left || a.top !== b.top) {
-          el.animate(
-            [{ transform: `translate(${a.left - b.left}px, ${a.top - b.top}px)` }, { transform: "none" }],
-            { duration: 520, easing: "cubic-bezier(0.22, 1, 0.36, 1)" }
-          );
-        }
-      });
-    };
-
-    buttons.forEach((btn) => {
-      // Отклик сразу на нажатие, а не на отпускание
-      btn.addEventListener("pointerdown", () => moveTo(btn));
-      btn.addEventListener("click", () => {
-        buttons.forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
-        moveTo(btn);
-        applyFilter(btn.dataset.value);
-        haptic(6);
-      });
-    });
-    // Если палец ушёл с кнопки — подложка возвращается к активной
-    seg.addEventListener("pointerleave", () => {
-      const active = buttons.find((b) => b.getAttribute("aria-pressed") === "true");
-      if (active) moveTo(active);
-    });
-
-    const init = () => moveTo(buttons.find((b) => b.getAttribute("aria-pressed") === "true") || buttons[0], true);
-    document.fonts ? document.fonts.ready.then(init) : init();
-    addEventListener("resize", init);
-  });
-
-  /* ------------------------------------------------------------------------
      Карусель категорий
      — пальцем листается нативно (инерция и доводка от браузера)
      — мышью тянется 1:1, после отпускания летит по инерции к ближайшей карточке
@@ -707,7 +630,6 @@
     // пока файла нет, показывается фрагмент схемы.
     const BUILDINGS = {
       c1: {
-        eyebrow: "Корпус 1 · «Вещевой»",
         title: "Корпус 1 · Вещевой",
         text: "Одежда и обувь, спецодежда и военторг, хозтовары, турецкая бытовая химия, пряжа, карнизы для штор, ТВ и антенны.",
         tags: ["Одежда", "Обувь", "Военторг", "Хозтовары", "Турецкая химия", "Пряжа", "Шторы и карнизы"],
@@ -716,7 +638,6 @@
         action: true,
       },
       c2: {
-        eyebrow: "Корпус 2",
         title: "Корпус 2 · Светофор",
         text: "Магазин-склад низких цен: продукты питания и бытовая химия.",
         tags: ["Продукты", "Бытовая химия"],
@@ -724,7 +645,6 @@
         focus: [345, 715],
       },
       c3: {
-        eyebrow: "Корпус 3",
         title: "Корпус 3 · Продуктовая галерея",
         text: "Овощи и фрукты, мясо, кондитерские изделия, хозтовары.",
         tags: ["Овощи и фрукты", "Мясо", "Кондитерская", "Хозтовары"],
@@ -732,7 +652,6 @@
         focus: [122, 720],
       },
       adm: {
-        eyebrow: "Здание администрации",
         title: "Администрация",
         text: "Администрация рынка, лаборатория, туалет и столовая «Щи-Борщи». Рядом парковка.",
         tags: ["Администрация", "Лаборатория", "Столовая", "Туалет"],
