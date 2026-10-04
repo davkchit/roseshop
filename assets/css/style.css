@@ -6,11 +6,11 @@
 :root {
   color-scheme: light;
 
-  --bg: #fffbf3;
-  --bg-rgb: 255, 251, 243;
-  --warm: #f7eedd;
+  --bg: #fdf3e6;
+  --bg-rgb: 253, 243, 230;
+  --warm: #fdf3e6;
   --surface: #ffffff;
-  --surface-sun: #fff4d6;
+  --surface-sun: #fdf3e6;
   --ink: #2b2118;
   --text: #2b2118;
   --text-2: #6b5d50;
@@ -44,23 +44,33 @@
   line-height: 1.55;
 }
 
+/* ПРАВИЛА ОТСТУПОВ (сетка 8 px, на телефоне / от 760 / от 1200):
+   боковое поле страницы  --gutter     плавно от 16 (телефон) до 40 (широкий экран)
+   вертикаль секции       --section-pad 40 / 56 / 64   (у лёгких блоков --section-pad-tight 24 / 32 / 40)
+   заголовок -> содержимое --head-gap   24 / 32 / 48
+   между карточками       --gap         12 / 16 / 24
+   между колонками        --gap-lg      24 / 32 / 48
+   внутри панели          --panel-pad   24 / 32 / 32
+   под шапкой страницы    --stack       24 / 32 / 32
+   Любые новые отступы берутся только из этих переменных и шкалы --s1…--s8. */
 /* ---------- Шкала отступов: база 4 px. Все отступы на сайте берутся только отсюда ---------- */
 :root {
   --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px;
   --gap: 12px;               /* между карточками одной сетки */
   --gap-lg: 24px;            /* между колонками крупных блоков */
-  --section-pad: 32px;       /* вертикальный отступ секции (между секциями получается вдвое больше) */
+  --section-pad: 40px;       /* вертикальный отступ секции (между секциями получается вдвое больше) */
   --section-pad-tight: 24px;
   --head-gap: 24px;          /* от заголовка секции до её содержимого */
   --panel-pad: 24px;         /* внутри панелей */
   --pad-xl: 32px;            /* внутри крупных плашек: призыв, «скоро» */
   --card-pad: 12px;          /* внутри карточек */
+  --stack: 24px;             /* отступ под шапкой страницы / под фото перед следующим блоком */
 }
 @media (min-width: 760px) {
-  :root { --gap: 16px; --gap-lg: 32px; --section-pad: 48px; --section-pad-tight: 32px; --head-gap: 32px; --panel-pad: 32px; --pad-xl: 48px; --card-pad: 16px; }
+  :root { --gap: 16px; --gap-lg: 32px; --section-pad: 56px; --section-pad-tight: 32px; --head-gap: 32px; --panel-pad: 32px; --pad-xl: 48px; --card-pad: 16px; --stack: 32px; }
 }
 @media (min-width: 1200px) {
-  :root { --gap: 24px; --gap-lg: 48px; --section-pad: 64px; --section-pad-tight: 48px; --head-gap: 48px; --pad-xl: 64px; }
+  :root { --gap: 24px; --gap-lg: 48px; --section-pad: 64px; --section-pad-tight: 40px; --head-gap: 48px; --pad-xl: 64px; }
 }
 
 *,
@@ -928,19 +938,6 @@ a.pcard:hover .pcard__btn--ghost { background: var(--surface-sun); }
    панель схемы, шторка, фото-тур
    ========================================================================== */
 
-/* ---------- Фоны секций: белый и тёплый тон чередуются, переход мягкий (без линий) ---------- */
-.section, .footer {
-  --fade: clamp(40px, 6vw, 72px);
-  --prev: var(--bg);
-  --tone: var(--bg);
-  background: linear-gradient(180deg, var(--prev) 0, var(--tone) var(--fade), var(--tone) 100%);
-}
-.tone-bg { --tone: var(--bg); }
-.tone-white { --tone: var(--surface); }
-.tone-warm { --tone: var(--warm); }
-/* Белые карточки на белом фоне теряются — заливаем их цветом страницы */
-.tone-white .perk, .tone-white .panel { background: var(--bg); box-shadow: none; }
-
 /* ---------- Шапка: плотное «стекло» с тонкой линией; справа — главное действие ---------- */
 .header::before {
   content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
@@ -971,8 +968,8 @@ a.pcard:hover .pcard__btn--ghost { background: var(--surface-sun); }
 .menu.is-open .menu__list li:nth-child(6) a { transition-delay: 240ms; }
 
 /* ---------- Заголовки страниц разделов: одна ссылка «назад», без крошек и мелкого текста ---------- */
-.page-top { padding-top: calc(var(--header-h) + var(--s5)); }
-.store-hero { gap: var(--s4); }
+.page-top { padding-top: calc(var(--header-h) + var(--stack)); }
+.store-hero { gap: var(--s4); padding-bottom: var(--stack); }
 .store-hero .lead { margin-top: var(--s3); }
 .backlink {
   display: inline-flex; align-items: center; gap: var(--s1); justify-self: start;
@@ -995,7 +992,6 @@ a.pcard:hover .pcard__btn--ghost { background: var(--surface-sun); }
 }
 
 /* ---------- Крупные подписи: чтобы читали все, и пожилые тоже ---------- */
-.ccard { width: clamp(220px, 66vw, 300px); }
 .ccard__name { font-size: 1.1875rem; line-height: 1.2; margin: var(--s3) var(--s1) 0; }
 @media (min-width: 760px) { .ccard__name { font-size: 1.3125rem; } }
 
@@ -1144,3 +1140,109 @@ a.pcard:hover .pcard__btn--ghost { background: var(--surface-sun); }
 @media (prefers-reduced-motion: reduce) {
   .hero__img, .hero__brand .logo, .hero__tag { animation: none; }
 }
+
+/* ==========================================================================
+   Ревизия 4: страница белая, блоки выделяются только цветом и скруглением.
+   Карусель и заставка — как раньше.
+   ========================================================================== */
+
+body { background: #fff; }
+.hero::after { background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #fff); }
+.section, .footer { background: none; }
+
+/* Тёплые блоки — панели со скруглением; остальные секции лежат прямо на белом */
+:root { --panel-x: clamp(16px, 4vw, 56px); }
+.section.tone-warm {
+  width: min(100% - var(--s4), calc(var(--max) + var(--panel-x) * 2));
+  margin: var(--s2) auto;
+  padding-inline: var(--panel-x);
+  background: var(--warm);
+  border-radius: var(--radius-l);
+  overflow: clip;
+}
+@media (min-width: 760px) { .section.tone-warm { width: min(100% - var(--s7), calc(var(--max) + var(--panel-x) * 2)); } }
+.tone-warm .container { width: 100%; }
+/* Карточки на белом фоне получают мягкий тёплый тон, чтобы не сливаться */
+.tone-white .perk, .tone-white .panel { background: var(--bg); box-shadow: none; }
+.tone-white .pcard { box-shadow: 0 0 0 1px rgba(43, 33, 24, 0.06); }
+
+/* Метка над заголовком блока магазина */
+.kicker { margin: 0; font-size: 0.875rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--text-2); }
+
+/* Длинные кнопки в контактах на телефоне — без переноса */
+@media (max-width: 520px) { .panel__actions .btn { padding-inline: var(--s3); font-size: 0.9375rem; white-space: nowrap; } }
+
+/* Телефон: цветные блоки — полосы во всю ширину экрана, без скруглений и боковых полей */
+@media (max-width: 759px) {
+  .section.tone-warm {
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+    padding-inline: var(--gutter);
+  }
+}
+
+/* Телефон: края цветных полос плавно растворяются в белый, без жёсткой линии */
+@media (max-width: 759px) {
+  .section.tone-warm {
+    --soft: 10px;
+    background: linear-gradient(180deg, #fff 0, var(--warm) var(--soft), var(--warm) calc(100% - var(--soft)), #fff 100%);
+    padding-block: var(--section-pad);
+  }
+}
+
+/* ---------- Подвал: тёплый блок, завершает страницу ---------- */
+.footer.tone-bg {
+  background: var(--warm);
+  margin-top: var(--section-pad-tight);
+  padding: var(--section-pad-tight) 0 calc(var(--section-pad-tight) + env(safe-area-inset-bottom));
+}
+.footer__inner { gap: var(--s3); }
+.footer p { text-wrap: pretty; line-height: 1.5; }
+@media (min-width: 760px) {
+  .footer.tone-bg { border-radius: var(--radius-l) var(--radius-l) 0 0; }
+}
+/* Телефон: верх подвала мягко растворяется из белого, как у цветных полос */
+@media (max-width: 759px) {
+  .footer.tone-bg {
+    --soft: 10px;
+    margin-top: 0;
+    background: linear-gradient(180deg, #fff 0, var(--warm) var(--soft), var(--warm) 100%);
+    padding-top: calc(var(--section-pad-tight) + var(--soft) / 2);
+  }
+  .footer__inner { gap: var(--s4); }
+  .footer .logo { height: 36px; }
+}
+
+/* Компьютер: тёплые панели с мягким растушёванным краем */
+@media (min-width: 760px) {
+  .section.tone-warm {
+    box-shadow: none;
+  }
+}
+
+
+/* ==========================================================================
+   Ревизия 5: один тёплый оттенок, перки без мини-блоков, «Есть ваш размер?» — панель
+   ========================================================================== */
+
+/* Перки: просто иконка и текст, без карточек, внутри тёплой панели */
+.perks--plain { margin-bottom: var(--head-gap); gap: var(--gap); }
+.perks--plain .perk { background: none; box-shadow: none; padding: 0; border-radius: 0; }
+.perks--plain .perk__icon { background: #fff; box-shadow: var(--shadow-soft); }
+@media (min-width: 760px) { .perks--plain .perk { padding: 0; } }
+.tone-warm .perk__icon { background: #fff; }
+
+/* «Есть ваш размер?» внутри тёплой панели: без собственного фона */
+.tone-warm .ask { background: none; padding: 0; border-radius: 0; box-shadow: none; }
+.tone-warm .ask__icon { background: #fff; box-shadow: var(--shadow-soft); }
+.tone-warm .ask .btn--ghost { background: #fff; }
+
+/* Активный шаг тура — белая «таблетка» на тёплой панели шагов */
+.steps--tour li.is-current { background: #fff; box-shadow: var(--shadow-soft); }
+
+/* Две тёплые панели подряд (панель + подвал) разделены воздухом */
+
+/* Подвал чередуется с предыдущим блоком: после тёплой панели он белый */
+.footer.footer--white { background: none; margin-top: 0; border-radius: 0; }
+@media (max-width: 759px) { .footer.footer--white { background: none; padding-top: var(--section-pad-tight); } }
