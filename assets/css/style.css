@@ -1187,23 +1187,26 @@ body { background: #fff; }
   .section.tone-warm { padding-block: var(--section-pad); }
 }
 
-/* ---------- Подвал: одинаковый на всех страницах — белый, тонкая линия сверху ---------- */
+/* ---------- Подвал: одинаковый на всех страницах — белый, спокойный ---------- */
 .footer.tone-bg {
   background: none;
-  padding: 0 0 calc(var(--section-pad-tight) + env(safe-area-inset-bottom));
+  margin-top: 0;
+  padding: var(--section-pad-tight) 0 calc(var(--section-pad-tight) + env(safe-area-inset-bottom));
 }
-.footer__inner {
-  gap: var(--s3);
+.footer__inner { gap: var(--s3); }
+.footer p { text-wrap: pretty; line-height: 1.5; }
+/* Линия сверху — только если перед подвалом белый блок; после тёплой панели граница и так видна */
+main:has(> .section.tone-white:last-child) + .footer .footer__inner {
   padding-top: var(--section-pad-tight);
   border-top: 1px solid var(--line);
 }
-.footer p { text-wrap: pretty; line-height: 1.5; }
+main:has(> .section.tone-white:last-child) + .footer.tone-bg { padding-top: 0; }
+/* Телефон: компактно и по центру, в одной оси с блоком над подвалом */
 @media (max-width: 759px) {
-  .footer__inner { gap: var(--s4); }
-  .footer .logo { height: 36px; }
+  .footer__inner { justify-items: center; text-align: center; gap: var(--s2); }
+  .footer .logo { height: 30px; margin-bottom: var(--s1); }
+  .footer p { font-size: 0.875rem; max-width: 34ch; }
 }
-/* Отступ над линией, чтобы она не прилипала к тёплой панели */
-.footer.tone-bg { margin-top: var(--s5); }
 
 /* ==========================================================================
    Ревизия 5: один тёплый оттенок, перки без мини-блоков, «Есть ваш размер?» — панель
