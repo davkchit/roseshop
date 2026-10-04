@@ -1241,3 +1241,53 @@ main:has(> .section.tone-white:last-child) + .footer.tone-bg { padding-top: 0; }
 /* Активный шаг тура — белая «таблетка» на тёплой панели шагов */
 .steps--tour li.is-current { background: #fff; box-shadow: var(--shadow-soft); }
 
+
+
+/* ==========================================================================
+   Ревизия 6: компактная шапка магазина, карточки разделов-витрины, крупнее мелкий текст, тур на телефоне
+   ========================================================================== */
+
+/* 1. Фото в шапке магазина на компьютере ниже — разделы видны с первого экрана */
+@media (min-width: 760px) { .store-hero__photo { aspect-ratio: auto; height: clamp(240px, 24vw, 320px); } }
+
+/* 2. Карточки разделов: фото на всю карточку, название на затемнении, круглая стрелка */
+a.pcard { position: relative; isolation: isolate; }
+a.pcard .pcard__photo { aspect-ratio: 3 / 4; }
+a.pcard .pcard__photo::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(20, 14, 8, 0) 45%, rgba(20, 14, 8, 0.72) 100%);
+}
+a.pcard .pcard__body {
+  position: absolute; inset: auto 0 0 0; z-index: 1;
+  flex-direction: row; align-items: flex-end; justify-content: space-between; gap: var(--s2);
+  padding: var(--s4);
+}
+a.pcard .pcard__text { padding: 0; }
+a.pcard .pcard__name { color: #fff; font-size: 1.25rem; text-wrap: balance; }
+a.pcard .pcard__desc { color: rgba(255, 255, 255, 0.85); font-size: 0.9375rem; }
+.pcard__go {
+  flex: none; width: 40px; height: 40px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: #fff; color: var(--ink);
+  transition: transform 300ms var(--ease-spring), background-color 200ms;
+}
+.pcard__go svg { width: 20px; height: 20px; }
+@media (hover: hover) {
+  a.pcard:hover .pcard__go { background: var(--orange); color: #fff; transform: translateX(2px); }
+}
+@media (max-width: 759px) {
+  a.pcard .pcard__body { padding: var(--s3); }
+  a.pcard .pcard__name { font-size: 1.0625rem; }
+  a.pcard .pcard__desc { font-size: 0.9375rem; }
+  .pcard__go { width: 32px; height: 32px; }
+  .pcard__go svg { width: 16px; height: 16px; }
+}
+
+/* 3. Мелкий вторичный текст — не меньше 16 px */
+.steps span, .pcard__desc, .perk span { font-size: 1rem; }
+
+/* 4. Телефон: в туре виден только текущий шаг — список не повторяет фото-тур */
+@media (max-width: 899px) {
+  .steps--tour li:not(.is-current) { display: none; }
+  .steps--tour li.is-current { margin-inline: 0; }
+}
