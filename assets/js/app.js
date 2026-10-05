@@ -242,6 +242,35 @@
   }
 
   /* ------------------------------------------------------------------------
+     Видео в карточках разделов: грузится и играет только при наведении мышью.
+     На телефонах, при экономии трафика и отключённых анимациях остаётся фото.
+     ------------------------------------------------------------------------ */
+  if (
+    matchMedia("(hover: hover) and (pointer: fine)").matches &&
+    !matchMedia("(prefers-reduced-motion: reduce)").matches &&
+    !(navigator.connection && navigator.connection.saveData)
+  ) {
+    document.querySelectorAll(".pcard__video").forEach((video) => {
+      const card = video.closest(".pcard");
+      let hovered = false;
+      video.addEventListener("playing", () => {
+        if (hovered) video.classList.add("is-playing");
+      });
+      card.addEventListener("pointerenter", () => {
+        hovered = true;
+        video.currentTime = 0;
+        const p = video.play();
+        if (p) p.catch(() => {});
+      });
+      card.addEventListener("pointerleave", () => {
+        hovered = false;
+        video.classList.remove("is-playing");
+        setTimeout(() => { if (!hovered) video.pause(); }, 350);
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------------------
      Карусель категорий
      — пальцем листается нативно (инерция и доводка от браузера)
      — мышью тянется 1:1, после отпускания летит по инерции к ближайшей карточке
